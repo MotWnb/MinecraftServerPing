@@ -4,6 +4,8 @@ package re.alwyn974.minecraftserverping;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -56,17 +58,18 @@ public class MinecraftServerPing {
     }
 
     private String readStatusResponse(DataInputStream in) throws IOException {
-        MinecraftServerPingUtil.readVarInt(in); // Size
+        MinecraftServerPingUtil.readVarInt(in); // 读取数据包大小
         int id = MinecraftServerPingUtil.readVarInt(in);
-        MinecraftServerPingUtil.io(id == -1, "Server prematurely ended stream.");
-        MinecraftServerPingUtil.io(id != MinecraftServerPingUtil.PACKET_STATUSREQUEST, "Server returned invalid packet id.");
+        MinecraftServerPingUtil.io(id == -1, "服务器提前结束了数据流。");
+        MinecraftServerPingUtil.io(id != MinecraftServerPingUtil.PACKET_STATUSREQUEST, "服务器返回了无效的数据包 ID。");
         int length = MinecraftServerPingUtil.readVarInt(in);
-        MinecraftServerPingUtil.io(length == -1, "Server prematurely ended stream.");
-        MinecraftServerPingUtil.io(length == 0, "Server returned unexpected value.");
+        MinecraftServerPingUtil.io(length == -1, "服务器提前结束了数据流。");
+        MinecraftServerPingUtil.io(length == 0, "服务器返回了意外的值。");
         byte[] data = new byte[length];
         in.readFully(data);
-        return new String(data, MinecraftServerPingUtil.UTF_8);
+        return new String(data, StandardCharsets.UTF_8);
     }
+
 
     private void sendPing(DataOutputStream out, long now) throws IOException {
         out.writeByte(0x09); // Size of packet
