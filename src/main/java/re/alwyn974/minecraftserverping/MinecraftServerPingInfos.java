@@ -1,126 +1,88 @@
-/**
- * Copyright Alwyn974 2019-2020
- * 
- * @author Developed By <a href="https://github.com/alwyn974"> Alwyn974</a>
- */
 
 package re.alwyn974.minecraftserverping;
 
 import java.util.List;
 
-/**
- * Informations of Minecraft Server
- * 
- * @author <a href="https://github.com/alwyn974"> Alwyn974 </a>
- * @since 1.0.0
- * @version 2.0.0
- */
 public class MinecraftServerPingInfos {
-	
-	protected String description;
-	private Players players;
-	private Version version;
-	private String favicon;
-	private long latency;
-	
-	/**
-	 * @return the MOTD
-	 */
-	public String getDescription() {
-		return description;
-	}
-	
-	/**
-	 * @return a clean motd
-	 */
-	public String getStrippedDescription() {
-		return MinecraftServerPingUtil.removeExtraCode(this.description);
-	}
+    protected String description;
+    private Players players;
+    private Version version;
+    private String favicon;
+    private long latency;
 
-	/**
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * @return {@link Player}
-	 */
-	public Players getPlayers() {
-		return players;
-	}
+    public String getStrippedDescription() {
+        return MinecraftServerPingUtil.removeExtraCode(description);
+    }
 
-	/**
-	 * @return {@link Version}
-	 */
-	public Version getVersion() {
-		return version;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * @return Base64 encoded favicon image
-	 */
-	public String getFavicon() {
-		return favicon;
-	}
+    public Players getPlayers() {
+        return players;
+    }
 
-	/**
-	 * @return the latency
-	 */
-	public long getLatency() {
-		return latency;
-	}
+    public Version getVersion() {
+        return version;
+    }
 
-	/**
-	 * @param latency the latency to set
-	 */
-	public void setLatency(long latency) {
-		this.latency = latency;
-	}
-	
-	public class Players {
-		private int max;
-		private int online;
-		private List<Player> sample;
+    public String getFavicon() {
+        return favicon;
+    }
 
-		public int getMax() {
-			return max;
-		}
+    public long getLatency() {
+        return latency;
+    }
 
-		public int getOnline() {
-			return online;
-		}
+    public void setLatency(long latency) {
+        this.latency = latency;
+    }
 
-		public List<Player> getSample() {
-			return sample;
-		}
-	}
+    public class Players {
+        private int max;
+        private int online;
+        private List<Player> sample;
 
-	public class Player {
-		private String name;
-		private String id;
+        public int getMax() {
+            return max;
+        }
 
-		public String getName() {
-			return name;
-		}
+        public int getOnline() {
+            return online;
+        }
 
-		public String getId() {
-			return id;
-		}
-	}
-	
-	public class Version {
-		private String name;
-		private String protocol;
+        public List<Player> getSample() {
+            return sample;
+        }
+    }
 
-		public String getName() {
-			return name;
-		}
+    public class Player {
+        private String name;
+        private String id;
 
-		public String getProtocol() {
-			return protocol;
-		}
-	}
-	
+        public String getName() {
+            return name;
+        }
+
+        public String getId() {
+            return id;
+        }
+    }
+
+    public class Version {
+        private String name;
+        private String protocol;
+
+        public String getName() {
+            return name;
+        }
+
+        public String getProtocol() {
+            return protocol;
+        }
+    }
 }

@@ -13,26 +13,36 @@ targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	compile 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.code.gson:gson:2.8.9'
+}
+
+configurations {
+    runtimeClasspath {
+        canBeResolved = true
+        canBeConsumed = false
+        extendsFrom implementation
+    }
 }
 
 jar {
     from "LICENSE"
     from "LICENSE.LESSER"
-    
+
+    // 使用 runtimeClasspath 配置来收集依赖项
     from {
-    	configurations.compile.collect {
-    		it.isDirectory() ? it : zipTree(it)
-    	}
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
     }
 }
 
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
+
+tasks.register('sourcesJar', Jar) {
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
@@ -41,15 +51,7 @@ build.dependsOn sourcesJar
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId group
-            artifactId archivesBaseName
-            version = version
-
             from components.java
-
-            artifact sourcesJar {
-                classifier 'sources'
-            }
         }
     }
 
@@ -59,3 +61,4 @@ publishing {
         }
     }
 }
+
